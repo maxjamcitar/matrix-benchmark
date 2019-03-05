@@ -1,6 +1,6 @@
 #matDims=( 3 5 10 15 20 25 30 35 40 45 50 55 60 65 70 75 80 85 90 95 100 )
 matDims=100
-tries=5
+tries=10
 cycles=10000
 
 gcc matrix.c -o matrix.o -lm -O3
