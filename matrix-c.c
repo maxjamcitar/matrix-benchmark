@@ -40,13 +40,27 @@ int main (int argc, char* argv[]) {
     long double resultFlops = 0;
     char* processorLine;
     char* processorName;
-
+    char* processorFreqStrLine;
+    char* processorFreqStrName;
+    double processorFreqVal;
+    FILE* outPipe;
+    
     // Getting processor name
     processorLine = (char*)malloc(255);
-    FILE* outPlatformPipe = popen("cat /proc/cpuinfo | grep 'model name' | uniq", "r"); // Linux dependent
-    processorLine = fgets(processorLine, 255, outPlatformPipe);
+    outPipe = popen("cat /proc/cpuinfo | grep 'model name' | uniq", "r"); // Linux dependent
+    processorLine = fgets(processorLine, 255, outPipe);
     processorName = processorLine + 13;
-    pclose(outPlatformPipe);
+    pclose(outPipe);
+
+    // Getting processor frequency
+    processorFreqStrLine = (char*)malloc(255);
+    outPipe = popen("lscpu | grep max", "r"); // Linux dependent
+    processorFreqStrLine = fgets(processorLine, 255, outPipe);
+    processorFreqStrName = processorFreqStrLine + 21;
+    pclose(outPipe);
+    processorFreqVal = atof(processorFreqStrName)*1e6;
+    printf("%f", processorFreqVal);
+
 
     if (argc != 1) {
         matDim = atoi(argv[1]);
@@ -82,13 +96,14 @@ int main (int argc, char* argv[]) {
 
     free (mat1); free (mat2); free (mat3);
 
-    resultFlops = (((long double)matDim*(long double)matDim*(long double)matDim) * (long double)cycles) / (((long double)timeDuration/1e6)*1e9);
+    resultFlops = (((long double)matDim*(long double)matDim*(long double)matDim) * (long double)cycles) / (((long double)timeDuration/1e6)*(long double)processorFreqVal*1e9);
 
     fileStream = fopen(fileName, "a");
     fprintf(fileStream, "%d\t%d\t%.10Lf\t%s\n", matDim, cycles, resultFlops, processorName);
     fclose(fileStream);
 
     free (processorLine);
+    free (processorFreqStrLine);
 
     return 0;
 }
