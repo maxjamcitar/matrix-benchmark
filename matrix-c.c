@@ -55,12 +55,10 @@ int main (int argc, char* argv[]) {
     // Getting processor frequency
     processorFreqStrLine = (char*)malloc(255);
     outPipe = popen("lscpu | grep max", "r"); // Linux dependent
-    processorFreqStrLine = fgets(processorLine, 255, outPipe);
+    processorFreqStrLine = fgets(processorFreqStrLine, 255, outPipe);
     processorFreqStrName = processorFreqStrLine + 21;
     pclose(outPipe);
     processorFreqVal = atof(processorFreqStrName)*1e6;
-    printf("%f", processorFreqVal);
-
 
     if (argc != 1) {
         matDim = atoi(argv[1]);
