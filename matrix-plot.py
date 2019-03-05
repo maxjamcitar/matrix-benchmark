@@ -40,7 +40,7 @@ for i_data in [arm_data, intel_data]:
 
 plt.legend()
 
-plt.title("GFLOPS as function of matrix dimension, 200 cycles")
+plt.title("FLOPS/cycle as function of matrix dimension, 10000 cycles")
 
 plb.savefig(nameImage)
 print("Graph saved in " + nameImage + ".")
