@@ -13,7 +13,7 @@ do
         echo "start $(date) $matDim $try" >> matrix-timelog.txt
         echo ""$matDim"x"$matDim" matrix, try $try"
         taskset 0x00000001 ./matrix.o $matDim $cycles
-        echo "start $(date) $matDim $try" >> matrix-timelog.txt
+        echo "end $(date) $matDim $try" >> matrix-timelog.txt
     done 
 done
 #python3 matrix-plot.py matrix-output.txt matrix-plot.png
