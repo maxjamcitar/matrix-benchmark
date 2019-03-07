@@ -11,16 +11,19 @@ filePath = sys.argv[1] # path to text file
 nameImage = sys.argv[2] # name of future plot image
 
 # 0=dimension, 1=cycles, 2=time, 3=processor
-data = pd.read_table(filePath, sep='\t', header=None, names={0, 1, 2, 3})
+data = pd.read_csv(filePath, sep='\t', header=None, names={0, 1, 2, 3})
 
 arm_data = data.loc[data[3] == "ARMv8 Processor rev 1 (v8l)"]
 intel_data = data.loc[data[3] == "Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz"]
 
-fig = plt.figure(figsize=(8.00, 6.00)) # 1920x1080 image
+fig = plt.figure(figsize=(19.20, 10.80)) # 1920x1080 image
 ax = fig.add_subplot(1, 1, 1)
 
+file = open("matrix_means+errors.txt", "w") # to clear output file
+file.close()
+
 for i_data in [arm_data, intel_data]:
-    dimensions = i_data[0].unique() # receive all distances
+    dimensions = i_data[0].unique() # receive all dimensions
     means=[]
     errors=[]
     for dim in dimensions:
@@ -33,10 +36,13 @@ for i_data in [arm_data, intel_data]:
         plt.errorbar(dimensions, means, yerr=errors, marker='^', label="ARMv8 Processor rev 1 (v8l)")
     elif i_data.equals(intel_data):
         plt.errorbar(dimensions, means, yerr=errors, marker='^', label="Intel(R) Core(TM) i5-7200U CPU @ 2.50GHz")
+    file = open("matrix_means+errors.txt", "a")
+    i = 0
+    while i < dimensions.size:
+        file.write (str(dimensions[i]) + '\t' + str(means[i]) + '\t' + str(errors[i]) + '\t' + str(i_data.iloc[0][3]) + '\n')
+        i+=1
+    file.close()
 
-# data['0'] = time, data['1'] = Rx(t)
-#plt.plot(data[0], data[3])
-#plb.ylim(17000, 18000)
 
 plt.legend()
 
@@ -44,10 +50,3 @@ plt.title("FLOPS/cycle as function of matrix dimension, 10000 cycles")
 
 plb.savefig(nameImage)
 print("Graph saved in " + nameImage + ".")
-
-file = open("matrix_means+errors.txt", "w")
-i = 0
-while i < dimensions.size:
-    file.write (str(dimensions[i]) + '\t' + str(means[i]) + '\t' + str(errors[i]) + '\n')
-    i+=1
-file.close()
