@@ -38,7 +38,7 @@ for i_data in [arm_data, intel_data]:
     while i < dimensions.size:
         file.write (str(dimensions[i]) + '\t' + str(means[i]) + '\t' + str(errors[i]) + '\t' + str(i_data.iloc[0][3]) + '\n')
         i+=1
-file.close()
+    file.close()
 
 
 plt.legend()
