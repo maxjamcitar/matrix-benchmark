@@ -1,5 +1,9 @@
-all:	
-	gcc matrix.c -o matrix.o -I Dependencies/OpenBLAS/include -LDependencies/OpenBLAS/lib -lopenblas -lm -O2
+OPTFLAG=O3
+
+all: matrix
+
+matrix:
+	gcc matrix.c -o matrix -I Dependencies/OpenBLAS/include -LDependencies/OpenBLAS/lib -lopenblas -lm -$(OPTFLAG)
 
 clean: 
-	rm -r matrix.o
+	rm -rf *.o matrix
