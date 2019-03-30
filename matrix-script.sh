@@ -17,7 +17,7 @@ do
     do
         echo "start $(date) $matDim $try" >> matrix-timelog.txt
         echo ""$matDim"x"$matDim" matrix, try $try"
-        taskset 0x00000001 ./$matrixfile $matDim $cycles
+        taskset 0x00000001 ./$matrixfile $matDim $cycles # execute only on the 1st core
         echo "end $(date) $matDim $try" >> matrix-timelog.txt
     done 
 done
