@@ -35,7 +35,7 @@ int main (int argc, char* argv[]) {
     float *mat1, *mat2, *mat3;
     struct timespec timeStart, timeEnd;
     unsigned long timeDuration = 0;
-    char fileName[256] = "matrix-output.txt";
+    char fileName[256] = "text-output/matrix-output.txt";
     FILE* fileStream;
     long double resultFlops = 0;
     char* processorLine;

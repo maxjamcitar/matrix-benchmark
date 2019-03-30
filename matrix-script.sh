@@ -3,6 +3,7 @@ matDims=100
 tries=5
 cycles=10000
 matrixfile=matrix
+textfolder=text-output
 
 if test ! -f "$matrixfile"
 then
@@ -10,15 +11,17 @@ then
     exit
 fi
 
+mkdir -p $textfolder
+
 #for matDim in "${matDims[@]}"
 for (( matDim=1; matDim<$matDims; matDim++ ))
 do
     for (( try=0; try<$tries; try++ ))
     do
-        echo "start $(date) $matDim $try" >> matrix-timelog.txt
+        echo "start $(date) $matDim $try" >> $textfolder/matrix-timelog.txt
         echo ""$matDim"x"$matDim" matrix, try $try"
         taskset 0x00000001 ./$matrixfile $matDim $cycles # execute only on the 1st core
-        echo "end $(date) $matDim $try" >> matrix-timelog.txt
+        echo "end $(date) $matDim $try" >> $textfolder/matrix-timelog.txt
     done 
 done
 
