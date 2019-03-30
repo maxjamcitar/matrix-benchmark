@@ -27,7 +27,7 @@ for i_data in [arm_data, intel_data]:
         means.append((pd.Series.mean(i_data[2].loc[i_data[0] == dim])))
         errors.append((pd.Series.std(i_data[2].loc[i_data[0] == dim])))
 
-    ax.set_yscale('log')
+    ax.set_xscale('log')
     plt.xticks(dimensions)
     if i_data.equals(arm_data):
         plt.errorbar(dimensions, means, yerr=errors, marker='^', label="ARMv8 Processor rev 1 (v8l)")
