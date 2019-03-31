@@ -1,0 +1,3 @@
+[submodule "Dependencies/OpenBLAS"]
+	path = Dependencies/OpenBLAS
+	url = https://github.com/xianyi/OpenBLAS
