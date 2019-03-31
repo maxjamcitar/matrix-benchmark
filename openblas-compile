@@ -1,4 +1,4 @@
-(cd Dependencies/OpenBLAS-src \
+(cd Dependencies/OpenBLAS \
 && make \
-&& mkdir -p ../OpenBLAS \
-&& make PREFIX=../OpenBLAS install)
+&& mkdir -p ../OpenBLAS-run \
+&& make PREFIX=../OpenBLAS-run install)
