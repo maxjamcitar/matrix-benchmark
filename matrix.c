@@ -6,7 +6,7 @@
 #include <math.h>
 #include <string.h>
 
-float* multiplyMatrices (float* mat1, float* mat2, float* matRes, 
+double* multiplyMatrices (double* mat1, double* mat2, double* matRes, 
                          int matRows1, int matColumns1, int matRows2, int matColumns2) {
     for (int i = 0; i < matRows1; ++i) {
         for (int j = 0; j < matColumns2; ++j) {
@@ -19,7 +19,7 @@ float* multiplyMatrices (float* mat1, float* mat2, float* matRes,
     return matRes;
 }
 
-void printMatrix(float* mat, int rows, int columns) 
+void printMatrix(double* mat, int rows, int columns) 
 {
     printf("\n");
     for (int i = 0; i < rows; ++i) {
@@ -32,7 +32,7 @@ void printMatrix(float* mat, int rows, int columns)
 
 int main (int argc, char* argv[]) {
     int matDim = 1, cycles = 1;
-    float *mat1, *mat2, *mat3;
+    double *mat1, *mat2, *mat3;
     struct timespec timeStart, timeEnd;
     unsigned long timeDuration = 0;
     char fileName[256] = "text-output/matrix-output.txt";
@@ -69,13 +69,13 @@ int main (int argc, char* argv[]) {
         return -1;
     }
 
-    mat1 = (float*)malloc(sizeof(float)*matDim*matDim);
-    mat2 = (float*)malloc(sizeof(float)*matDim*matDim);
-    mat3 = (float*)malloc(sizeof(float)*matDim*matDim);
+    mat1 = (double*)malloc(sizeof(double)*matDim*matDim);
+    mat2 = (double*)malloc(sizeof(double)*matDim*matDim);
+    mat3 = (double*)malloc(sizeof(double)*matDim*matDim);
 
     for (int i = 0; i < matDim*matDim; ++i) {
-        mat1[i] = (i+1.52)*0.12522*powl(-1.0, i+2);
-        mat2[i] = (i-5.41)*2.41252*powl(-1.0,i+1);
+        mat1[i] = (i+1.52)*0.12522*pow(-1.0, i+2);
+        mat2[i] = (i-5.41)*2.41252*pow(-1.0,i+1);
         mat3[i] = 0;
     }
 
