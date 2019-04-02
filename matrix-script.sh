@@ -7,7 +7,7 @@ textfolder=text-output
 
 if test ! -f "$matrixfile"
 then
-	echo "Executable file '$matrixfile' not found (compile it with 'make' command)."
+    echo "Executable file '$matrixfile' not found (compile it with 'make' command)."
     exit
 fi
 
