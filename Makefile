@@ -5,7 +5,7 @@ LOCOPENBLASRUN		= Dependencies/OpenBLAS-run
 MATRIXOBJFILE		= matrix
 
 all: $(MATRIXOBJFILE)
-
+	echo "Compilation of matrix-benchmark and OpenBLAS started."
 
 $(LOCOPENBLASRUN): 
 	(cd $(LOCOPENBLASSRC) && make $(OPENBLASFLAGS) ) 
