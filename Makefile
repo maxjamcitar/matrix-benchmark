@@ -1,10 +1,20 @@
-OPTFLAG=O3
+OPTFLAG				= O3
+OPENBLASFLAGS		= 
+LOCOPENBLASSRC		= Dependencies/OpenBLAS
+LOCOPENBLASRUN		= Dependencies/OpenBLAS-run
+MATRIXOBJFILE		= matrix
 
-all: matrix
-	
+all: $(MATRIXOBJFILE)
 
-matrix:
-	gcc matrix.c -o matrix -I Dependencies/OpenBLAS-run/include -LDependencies/OpenBLAS-run/lib -lopenblas -lm -$(OPTFLAG)
+
+$(LOCOPENBLASRUN): 
+	(cd $(LOCOPENBLASSRC) && make $(OPENBLASFLAGS) ) 
+	mkdir -p $(LOCOPENBLASRUN)
+	(cd $(LOCOPENBLASSRC) && make PREFIX="../../$(LOCOPENBLASRUN)" install)
+
+$(MATRIXOBJFILE): $(LOCOPENBLASRUN)
+	gcc matrix.c -o $(MATRIXOBJFILE) -I $(LOCOPENBLASRUN)/include -L$(LOCOPENBLASRUN)/lib -lopenblas -lm -$(OPTFLAG)
 
 clean: 
-	rm -rf *.o matrix
+	rm -rf *.o 	$(MATRIXOBJFILE)
+	rm -rf 		$(LOCOPENBLASRUN)
