@@ -93,7 +93,7 @@ int main (int argc, char* argv[]) {
     free (mat3);
 
     // Counting FLOPS
-    resultFlops = ((((long double)matDim*(long double)matDim*(long double)matDim) * (long double)cycles) / ((long double)timeDuration/1e6)) / (long double)processorFreqVal;
+    resultFlops = (((2*(long double)matDim*(long double)matDim*(long double)matDim) * (long double)cycles) / ((long double)timeDuration/1e6)) / (long double)processorFreqVal;
 
     // Creating output folder
     // As GCC complains about return values and we don't care about 'system's one,
