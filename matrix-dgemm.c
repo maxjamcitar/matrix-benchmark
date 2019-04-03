@@ -23,7 +23,7 @@ int main (int argc, char* argv[]) {
     double *mat1, *mat2, *mat3;
     struct timespec timeStart, timeEnd;
     unsigned long timeDuration = 0;
-    char fileName[256] = "text-output/matrix-output-def.txt";
+    char fileName[256] = "text-output/matrix-output-dgemm.txt";
     FILE* fileStream;
     long double resultFlops = 0;
     char* processorLine;
