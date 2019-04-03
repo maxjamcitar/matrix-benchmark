@@ -2,7 +2,7 @@
 matDims=100
 tries=5
 cycles=10000
-matrixfile=matrix
+matrixfile=matrix-dgemm
 textfolder=text-output
 
 if test ! -f "$matrixfile"
