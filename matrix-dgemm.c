@@ -37,14 +37,14 @@ int main (int argc, char* argv[]) {
     processorLine = (char*)malloc(255);
     outPipe = popen("cat /proc/cpuinfo | grep 'model name' | uniq", "r"); // Linux dependent
     processorLine = fgets(processorLine, 255, outPipe);
-    processorName = processorLine + 13;
+    processorName = processorLine + strlen("model name	: ";
     pclose(outPipe);
 
     // Getting processor frequency
     processorFreqStrLine = (char*)malloc(255);
     outPipe = popen("lscpu | grep max", "r"); // Linux dependent
     processorFreqStrLine = fgets(processorFreqStrLine, 255, outPipe);
-    processorFreqStrName = processorFreqStrLine + 21;
+    processorFreqStrName = processorFreqStrLine + strlen("CPU max MHz:         ");
     pclose(outPipe);
     processorFreqVal = atof(processorFreqStrName)*1e6;
 
