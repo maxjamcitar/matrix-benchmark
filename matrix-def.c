@@ -73,7 +73,7 @@ int main (int argc, char* argv[]) {
     processorLine = (char*)malloc(255);
     outPipe = popen("cat /proc/cpuinfo | grep 'model name' | uniq", "r"); // Linux dependent
     processorLine = fgets(processorLine, 255, outPipe);
-    processorName = processorLine + strlen("model name	: ";
+    processorName = processorLine + strlen("model name	: ");
     pclose(outPipe);
 
     // Getting processor frequency
