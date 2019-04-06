@@ -111,7 +111,7 @@ int main (int argc, char* argv[]) {
     }
 
     if (strcmp(dgemmArg, "dgemm") == 0) {
-        printf("Dgemm mode enabled.\n");        
+        printf("Calculation with dgemm mode started.\n");        
         strcpy(fileName, "text-output/matrix-output-dgemm.txt");
         clock_gettime(CLOCK_MONOTONIC, &timeStart); // Linux dependent
         for (int k = 0; k < cycles; ++k) {
@@ -123,7 +123,7 @@ int main (int argc, char* argv[]) {
         clock_gettime(CLOCK_MONOTONIC, &timeEnd);
     }
     else {
-        printf("Default mode enabled.\n");        
+        printf("Calculation with default mode started.\n");        
         clock_gettime(CLOCK_MONOTONIC, &timeStart); // Linux dependent
         for (int k = 0; k < cycles; ++k) {
             // printMatrix(mat1, matDim, matDim);
