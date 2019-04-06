@@ -2,7 +2,7 @@
 matDims=100
 tries=10
 cycles=10000
-matrixfile=matrix-obj
+matrixfile=matrix
 textfolder=text-output
 
 if test ! -f "$matrixfile"

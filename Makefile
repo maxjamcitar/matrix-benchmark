@@ -2,7 +2,7 @@ GCCFLAGS			= -O3
 OPENBLASFLAGS		= 
 LOCOPENBLASSRC		= Dependencies/OpenBLAS
 LOCOPENBLASRUN		= Dependencies/OpenBLAS-run
-MATRIXOBJFILE		= matrix-obj
+MATRIXOBJFILE		= matrix
 MATRIXSRCFILE		= matrix.c
 
 .PHONY: all clean
