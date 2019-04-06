@@ -1,27 +1,21 @@
-GCCDGEMMFLAGS		= -O3
-GCCDEFFLAGS		= -O3
+GCCFLAGS			= -O3
 OPENBLASFLAGS		= 
 LOCOPENBLASSRC		= Dependencies/OpenBLAS
 LOCOPENBLASRUN		= Dependencies/OpenBLAS-run
-MATRIXDGEMMOBJFILE	= matrix-dgemm
-MATRIXDEFOBJFILE	= matrix-def
+MATRIXOBJFILE		= matrix-obj
 
 .PHONY: all clean
 
-all: $(MATRIXDGEMMOBJFILE) $(MATRIXDEFOBJFILE)
+all: $(MATRIXOBJFILE)
 	
-
-$(MATRIXDEFOBJFILE): matrix-def.c
-	gcc matrix-def.c -o $(MATRIXDEFOBJFILE) -lm -Wall $(GCCDEFFLAGS)
-
 $(LOCOPENBLASRUN): 
 	(cd $(LOCOPENBLASSRC) && make $(OPENBLASFLAGS) ) 
 	mkdir -p $(LOCOPENBLASRUN)
 	(cd $(LOCOPENBLASSRC) && make PREFIX="../../$(LOCOPENBLASRUN)" install)
 
-$(MATRIXDGEMMOBJFILE): matrix-dgemm.c $(LOCOPENBLASRUN)
-	gcc matrix-dgemm.c -o $(MATRIXDGEMMOBJFILE) -I$(LOCOPENBLASRUN)/include -Wl,-rpath,$(LOCOPENBLASRUN)/lib -L$(LOCOPENBLASRUN)/lib  -lopenblas -lm -Wall $(GCCDGEMMFLAGS)
+$(MATRIXOBJFILE): matrix.c $(LOCOPENBLASRUN)
+	gcc matrix.c -o $(MATRIXOBJFILE) -I$(LOCOPENBLASRUN)/include -Wl,-rpath,$(LOCOPENBLASRUN)/lib -L$(LOCOPENBLASRUN)/lib  -lopenblas -lm -Wall $(GCCFLAGS)
 
 clean: 
-	rm -rf *.o 	$(MATRIXDGEMMOBJFILE) $(MATRIXDEFOBJFILE)
+	rm -rf *.o 	$(MATRIXOBJFILE) 
 	rm -rf 		$(LOCOPENBLASRUN)
