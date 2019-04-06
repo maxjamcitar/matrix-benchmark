@@ -3,6 +3,7 @@ OPENBLASFLAGS		=
 LOCOPENBLASSRC		= Dependencies/OpenBLAS
 LOCOPENBLASRUN		= Dependencies/OpenBLAS-run
 MATRIXOBJFILE		= matrix-obj
+MATRIXSRCFILE		= matrix.c
 
 .PHONY: all clean
 
@@ -13,8 +14,8 @@ $(LOCOPENBLASRUN):
 	mkdir -p $(LOCOPENBLASRUN)
 	(cd $(LOCOPENBLASSRC) && make PREFIX="../../$(LOCOPENBLASRUN)" install)
 
-$(MATRIXOBJFILE): matrix.c $(LOCOPENBLASRUN)
-	gcc matrix.c -o $(MATRIXOBJFILE) -I$(LOCOPENBLASRUN)/include -Wl,-rpath,$(LOCOPENBLASRUN)/lib -L$(LOCOPENBLASRUN)/lib  -lopenblas -lm -Wall $(GCCFLAGS)
+$(MATRIXOBJFILE): $(MATRIXSRCFILE) $(LOCOPENBLASRUN)
+	gcc $(MATRIXSRCFILE) -o $(MATRIXOBJFILE) -I$(LOCOPENBLASRUN)/include -Wl,-rpath,$(LOCOPENBLASRUN)/lib -L$(LOCOPENBLASRUN)/lib  -lopenblas -lm -Wall $(GCCFLAGS)
 
 clean: 
 	rm -rf *.o 	$(MATRIXOBJFILE) 
