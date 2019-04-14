@@ -12,10 +12,9 @@
 double* multiplyMatrices_default (double* mat1, double* mat2, double* matRes, 
                          int matRows1, int matColumns1, int matRows2, int matColumns2) {
     for (int i = 0; i < matRows1; ++i) {
-        for (int j = 0; j < matColumns2; ++j) {
-            matRes[i*matColumns1 + j] = 0;
-            for (int k = 0; k < matRows2; ++k) {
-                matRes[i*matColumns1 + j] += mat1[i*matColumns1+k] * mat2[k*matColumns2+j];
+        for (int k = 0; k < matColumns2; ++k) {
+            for (int j = 0; j < matRows2; ++j) {
+                matRes[i*matColumns1 + j] = matRes[i*matColumns1 + j] + mat1[i*matColumns1+k] * mat2[k*matColumns2+j]; // 2 FLOP
             }
         }
     }
@@ -26,10 +25,9 @@ double* multiplyMatrices_default (double* mat1, double* mat2, double* matRes,
 double* multiplyMatrices_unrolled5 (double* mat1, double* mat2, double* matRes, 
                          int matRows1, int matColumns1, int matRows2, int matColumns2) {
     for (int i = 0; i < matRows1; ++i) {
-        for (int j = 0; j < matColumns2; ++j) {
-            matRes[i*matColumns1 + j] = 0;
-            for (int k = 0; k < matRows2; ++k) {
-                matRes[i*matColumns1 + j] += mat1[i*matColumns1+k] * mat2[k*matColumns2+j];
+        for (int k = 0; k < matColumns2; ++k) {
+            for (int j = 0; j < matRows2; ++j) {
+                matRes[i*matColumns1 + j] = matRes[i*matColumns1 + j] + mat1[i*matColumns1+k] * mat2[k*matColumns2+j]; // 2 FLOP
             }
         }
     }
@@ -110,6 +108,9 @@ int main (int argc, char* argv[]) {
         mat3[i] = 0;
     }
 
+    timeStart.tv_nsec = 0;  timeStart.tv_sec = 0;
+    timeEnd.tv_nsec = 0;    timeEnd.tv_sec = 0;
+
     if (strcmp(dgemmArg, "dgemm") == 0) {
         printf("Calculation with dgemm mode started.\n");        
         strcpy(fileName, "text-output/matrix-output-dgemm.txt");
@@ -141,7 +142,8 @@ int main (int argc, char* argv[]) {
     free (mat1); free (mat2); free (mat3);
 
     // Counting FLOPS
-    resultFlops = (((2*(long double)matDim*(long double)matDim*(long double)matDim) * (long double)cycles) / ((long double)timeDuration/1e6)) / (long double)processorFreqVal;
+    resultFlops = (((2*(long double)matDim*(long double)matDim*(long double)matDim) * (long double)cycles) 
+    / ((long double)timeDuration/1e6)) / (long double)processorFreqVal;
 
     // Creating output folder
     // As GCC complains about return values and we don't care about 'system's one,
