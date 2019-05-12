@@ -9,6 +9,9 @@ int main (int argc, char* argv[]) {
     unsigned long timeDuration = 0;
     FILE* fileStream;
 
+    fileStream = fopen("clockresult.txt", "w");
+    fclose(fileStream);
+
     cycles = atoi(argv[1]);
     
     sleepStruct.tv_sec = 1;
@@ -22,7 +25,7 @@ int main (int argc, char* argv[]) {
         clock_gettime(CLOCK_MONOTONIC, &timeEnd);
         timeDuration = (timeEnd.tv_nsec - timeStart.tv_nsec) + (timeEnd.tv_sec - timeStart.tv_sec)*1e9; // to get nanoseconds
         
-	fileStream = fopen("result.txt", "a");
+	fileStream = fopen("clockresult.txt", "a");
 	fprintf(fileStream, "%ld\n", timeDuration);
 	fclose(fileStream);
         nanosleep(&sleepStruct, NULL);
