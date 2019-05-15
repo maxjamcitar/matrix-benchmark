@@ -11,10 +11,19 @@
 
 double* multiplyMatrices_default (double* mat1, double* mat2, double* matRes, 
                          int matRows1, int matColumns1, int matRows2, int matColumns2) {
+    double* mr;
+    double m1;
+    double* m2;
     for (int i = 0; i < matRows1; ++i) {
+        mr = matRes + i*matColumns1;
+        for (int j = 0; j < matRows2; ++j) {
+            mr[j] = 0;
+        }
         for (int k = 0; k < matColumns2; ++k) {
+            m1 = mat1[i*matColumns1+k];
+            m2 = mat2 + k*matColumns2;
             for (int j = 0; j < matRows2; ++j) {
-                matRes[i*matColumns1 + j] = matRes[i*matColumns1 + j] + mat1[i*matColumns1+k] * mat2[k*matColumns2+j]; // 2 FLOP
+                mr[j] += m1 * m2[j]; // 2 FLOP
             }
         }
     }
