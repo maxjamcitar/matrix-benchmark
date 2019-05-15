@@ -9,8 +9,7 @@
 
 #define BUNCHSIZE (5)
 
-double* multiplyMatrices_default (double* mat1, double* mat2, double* matRes, 
-                         int matRows1, int matColumns1, int matRows2, int matColumns2) {
+double* multiplyMatrices (double* mat1, double* mat2, double* matRes, int matRows1, int matColumns1, int matRows2, int matColumns2) {
     double* mr;
     double m1;
     double* m2;
@@ -27,27 +26,6 @@ double* multiplyMatrices_default (double* mat1, double* mat2, double* matRes,
             }
         }
     }
-    return matRes;
-}
-
-// Implementation of unrolling is yet to be done
-double* multiplyMatrices_unrolled5 (double* mat1, double* mat2, double* matRes, 
-                         int matRows1, int matColumns1, int matRows2, int matColumns2) {
-    for (int i = 0; i < matRows1; ++i) {
-        for (int k = 0; k < matColumns2; ++k) {
-            for (int j = 0; j < matRows2; ++j) {
-                matRes[i*matColumns1 + j] = matRes[i*matColumns1 + j] + mat1[i*matColumns1+k] * mat2[k*matColumns2+j]; // 2 FLOP
-            }
-        }
-    }
-    return matRes;
-}
-
-double* multiplyMatrices (double* mat1, double* mat2, double* matRes, int matRows1, int matColumns1, int matRows2, int matColumns2) {
-    // if (matRows2 >= BUNCHSIZE)
-    //    multiplyMatrices_unrolled5 (mat1, mat2, matRes, matRows1, matColumns1, matRows2, matColumns2);
-    // else
-        multiplyMatrices_default (mat1, mat2, matRes, matRows1, matColumns1, matRows2, matColumns2);
     return matRes;
 }
 
