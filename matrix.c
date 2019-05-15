@@ -10,18 +10,19 @@
 #define BUNCHSIZE (5)
 
 double* myDgemm (double* mat1, double* mat2, double* matRes, int matRows1, int matColumns1, int matRows2, int matColumns2) {
+    int i, j, k;
     double* mr;
     double m1;
     double* m2;
-    for (int i = 0; i < matRows1; ++i) {
+    for (i = 0; i < matRows1; ++i) {
         mr = matRes + i*matColumns1;
-        for (int j = 0; j < matRows2; ++j) {
+        for (j = 0; j < matRows2; ++j) {
             mr[j] = 0;
         }
-        for (int k = 0; k < matColumns2; ++k) {
+        for (k = 0; k < matColumns2; ++k) {
             m1 = mat1[i*matColumns1+k];
             m2 = mat2 + k*matColumns2;
-            for (int j = 0; j < matRows2; ++j) {
+            for (j = 0; j < matRows2; ++j) {
                 mr[j] += m1 * m2[j]; // 2 FLOP
             }
         }
@@ -31,9 +32,10 @@ double* myDgemm (double* mat1, double* mat2, double* matRes, int matRows1, int m
 
 void printMatrix(double* mat, int rows, int columns) 
 {
+    int i, j;
     printf("\n");
-    for (int i = 0; i < rows; ++i) {
-        for (int j = 0; j < columns; ++j) {
+    for (i = 0; i < rows; ++i) {
+        for (j = 0; j < columns; ++j) {
             printf ("%f\t", mat[i*columns+j]);
         }
         printf("\n");
@@ -41,6 +43,7 @@ void printMatrix(double* mat, int rows, int columns)
 }
 
 int main (int argc, char* argv[]) {
+    int i, k;
     int matDim = 1, cycles = 1;
     double *mat1, *mat2, *mat3;
     struct timespec timeStart, timeEnd;
@@ -89,7 +92,7 @@ int main (int argc, char* argv[]) {
     mat2 = (double*)malloc(sizeof(double)*matDim*matDim);
     mat3 = (double*)malloc(sizeof(double)*matDim*matDim);
 
-    for (int i = 0; i < matDim*matDim; ++i) {
+    for (i = 0; i < matDim*matDim; ++i) {
         mat1[i] = (i+1.52)*0.12522*pow(-1.0, i+2);
         mat2[i] = (i-5.41)*2.41252*pow(-1.0,i+1);
         mat3[i] = 0;
@@ -102,7 +105,7 @@ int main (int argc, char* argv[]) {
         printf("Calculation with dgemm mode started.\n");        
         strcpy(fileName, "text-output/matrix-output-dgemm.txt");
         clock_gettime(CLOCK_MONOTONIC, &timeStart); // Linux dependent
-        for (int k = 0; k < cycles; ++k) {
+        for (k = 0; k < cycles; ++k) {
             //printMatrix(mat1, matDim, matDim);
             //printMatrix(mat2, matDim, matDim);
             cblas_dgemm(CblasRowMajor, CblasNoTrans, CblasNoTrans, matDim, matDim, matDim, 1, mat1, matDim, mat2, matDim, 0, mat3, matDim);
@@ -113,7 +116,7 @@ int main (int argc, char* argv[]) {
     else {
         printf("Calculation with default mode started.\n");        
         clock_gettime(CLOCK_MONOTONIC, &timeStart); // Linux dependent
-        for (int k = 0; k < cycles; ++k) {
+        for (k = 0; k < cycles; ++k) {
             // printMatrix(mat1, matDim, matDim);
             // printMatrix(mat2, matDim, matDim);
             mat3 = myDgemm(mat1, mat2, mat3, matDim, matDim, matDim, matDim);
