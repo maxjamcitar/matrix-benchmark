@@ -9,7 +9,7 @@
 
 #define BUNCHSIZE (5)
 
-double* multiplyMatrices (double* mat1, double* mat2, double* matRes, int matRows1, int matColumns1, int matRows2, int matColumns2) {
+double* myDgemm (double* mat1, double* mat2, double* matRes, int matRows1, int matColumns1, int matRows2, int matColumns2) {
     double* mr;
     double m1;
     double* m2;
@@ -116,7 +116,7 @@ int main (int argc, char* argv[]) {
         for (int k = 0; k < cycles; ++k) {
             // printMatrix(mat1, matDim, matDim);
             // printMatrix(mat2, matDim, matDim);
-            mat3 = multiplyMatrices(mat1, mat2, mat3, matDim, matDim, matDim, matDim);
+            mat3 = myDgemm(mat1, mat2, mat3, matDim, matDim, matDim, matDim);
             // printMatrix(mat3, matDim, matDim);
         }
         clock_gettime(CLOCK_MONOTONIC, &timeEnd);
