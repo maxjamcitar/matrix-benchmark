@@ -12,7 +12,7 @@
 #elif defined __SSE__
 #include <immintrin.h>
 #else
-#error "ERROR: intrinsics unsupported (need NEON or SSE)."
+#error "ERROR: intrinsics unsupported (NEON or SSE required)."
 #endif
 
 #define VECSIZE (4)
@@ -106,7 +106,7 @@ void micro_4x4 (double* mat1, double* mat2, double* matRes, int ld1, int ld2, in
 	vst1q_f64(matRes + ld3*2 + 2, 	mr_21);	
 	vst1q_f64(matRes + ld3*3 + 0, 	mr_30);	
 	vst1q_f64(matRes + ld3*3 + 2, 	mr_31);	
-#else
+#elif defined __SSE__
     __m256d m1_0, m1_1, m2_0;
 
     __m256d mr_00 = _mm256_setzero_pd();
