@@ -39,6 +39,7 @@ void microInit (double* mat, int m, int n, int ld) {
             _mm256_storeu_pd(mat + j, _mm256_setzero_pd());
 	}
 #endif
+	}
 }
 
 /*
