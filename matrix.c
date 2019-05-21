@@ -113,10 +113,6 @@ void micro_4x4 (double* mat1, double* mat2, double* matRes, int ld1, int ld2, in
     __m256d mr_01 = _mm256_setzero_pd();
     __m256d mr_10 = _mm256_setzero_pd();
     __m256d mr_11 = _mm256_setzero_pd();
-    __m256d mr_20 = _mm256_setzero_pd();
-    __m256d mr_21 = _mm256_setzero_pd();
-    __m256d mr_30 = _mm256_setzero_pd();
-    __m256d mr_31 = _mm256_setzero_pd();
 
 	microInit(matRes, 4, 4, ld3); 
     for (i = 0; i < matColumns1; i++)
@@ -226,19 +222,19 @@ int main (int argc, char* argv[]) {
     mat2 = (double*)malloc(sizeof(double)*matDimMalloc);
     mat3 = (double*)malloc(sizeof(double)*matDimMalloc);
 
-    /*
     for (i = 0; i < matDim*matDim; ++i) {
         mat1[i] = (i+1.52)*0.12522*pow(-1.0, i+2);
         mat2[i] = (i-5.41)*2.41252*pow(-1.0,i+1);
         mat3[i] = 0;
     }
-    */
     
+    /*
     for (i = 0; i < matDim*matDim; ++i) {
         mat1[i] = i;
         mat2[i] = i;
         mat3[i] = 0;
     }
+    */
     
 
     timeStart.tv_nsec = 0;  timeStart.tv_sec = 0;
@@ -260,10 +256,10 @@ int main (int argc, char* argv[]) {
         printf("Calculation with default mode started.\n");        
         clock_gettime(CLOCK_MONOTONIC, &timeStart); // Linux dependent
         for (k = 0; k < cycles; ++k) {
-            printMatrix(mat1, matDim, matDim);
-            printMatrix(mat2, matDim, matDim);
+            // printMatrix(mat1, matDim, matDim);
+            // printMatrix(mat2, matDim, matDim);
             myDgemm(mat1, mat2, mat3, matDim, matDim, matDim, matDim);
-            printMatrix(mat3, matDim, matDim);
+            // printMatrix(mat3, matDim, matDim);
         }
         clock_gettime(CLOCK_MONOTONIC, &timeEnd);
     }
