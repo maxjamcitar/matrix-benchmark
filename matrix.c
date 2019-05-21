@@ -33,7 +33,7 @@ void microInit (double* mat, int m, int n, int ld) {
 #ifdef __ARM_NEON
 		for (j = 0; j < n; j += 2) {
 			vst1q_f64(mat + j, setq_float64(0.0, 0.0));
-		}
+	}
 #else
         for (j = 0; j < n; j += 4)
             _mm256_storeu_pd(mat + j, _mm256_setzero_pd());
@@ -141,9 +141,9 @@ void micro_4x4 (double* mat1, double* mat2, double* matRes, int ld1, int ld2, in
 void myDgemm (double* mat1, double* mat2, double* matRes, int matRows1, int matColumns1, int matRows2, int matColumns2) {
     int i, j;
     for (i = 0; i < matRows1; i += 4) {
-	for (j = 0; j < matColumns2; j += 4) {
-		micro_4x4(mat1 + i*matColumns1, mat2 + j, matRes + i*matColumns2 + j, matColumns1, matColumns2, matColumns2, matColumns1);
-	}
+	    for (j = 0; j < matColumns2; j += 4) {
+    		micro_4x4(mat1 + i*matColumns1, mat2 + j, matRes + i*matColumns2 + j, matColumns1, matColumns2, matColumns2, matColumns1);
+	    }
     }
 }
 
