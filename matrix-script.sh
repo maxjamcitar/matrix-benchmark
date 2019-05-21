@@ -1,4 +1,6 @@
-matDims=( 100 150 200 250 300 350 400 450 500 550 600 650 700 750 800 850 900 950 1000 2000 )
+#!/bin/bash
+
+matDims_big=( 100 150 200 250 300 350 400 450 500 )
 matDims=100
 tries_easy=5
 tries_hard=3
@@ -26,7 +28,7 @@ do
     done 
 done
 
-for matDim in "${matDims[@]}"
+for matDim in "${matDims_big[@]}"
 do
     for (( try=0; try<$tries_hard; try++ ))
     do
